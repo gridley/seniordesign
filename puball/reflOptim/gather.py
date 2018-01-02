@@ -19,7 +19,7 @@ for i in range(20):
                 sigmas.append(sigma)
 
 # write the results:
-with open('results.txt', 'w') as fh:
+with open('resultsZrH.txt', 'w') as fh:
     fh.write('#refl thickness (cm), keff, sigma\n')
     for i in range(20):
         fh.write('{}  {}  {}\n'.format(widths[i]-8.64, keffs[i], sigmas[i]))
