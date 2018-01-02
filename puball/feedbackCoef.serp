@@ -1,0 +1,108 @@
+% Check temperature coefficient of reactivity using Serpent
+% branching input. This investigates the effect of Doppler on
+% the reactor without thermal expansion. 
+
+set title "pulsr"
+
+
+%------define the sphere's surface----
+
+surf 1 sph 0 0 0 5.1
+surf 2 sph 0 0 0 5.6
+surf 4 sph 0 0 0 8.14 % 1 inch sodium coolant blanket
+surf 5 sph 0 0 0 8.64 % half centimeter sodium coolant vessel (stainless steel)
+surf 3 sph 0 0 0 200.0
+
+%------define cells--------------------
+
+cell 1 0 fuel -1
+cell 2 0 tant60 1 -2
+cell 5 0 sodium 2 -4
+cell 6 0 stain 4 -5
+
+% max shutdown reactivity removal: no reflector
+%cell 3 0 void 5 -3
+cell 3 0 refl 5 -3
+
+cell 4 0 outside 3
+
+%-------material definition--------------
+
+% calculated using serpent -mix routines
+mat fuel -16.0 burn 1 tmp 700.0
+94238.06c  8.18535242e-05
+94239.06c  6.37136035e-01
+94240.06c  3.92321333e-02
+94241.06c  2.35768284e-03
+94242.06c  1.47579209e-04
+31000.06c  2.35212255e-02
+26000.06c  2.97523490e-01
+
+% stainless steel
+mat stain  -8.027
+Ni-nat.09c -0.100
+C-nat.09c  -0.0003
+Fe-nat.09c -0.67895
+Cr-nat.09c -0.19
+Ti-46.09c  -0.002
+Si-nat.09c -0.01
+S-nat.09c  -0.0003
+
+% Be reflector
+mat refl -1.85 tmp 700.0
+4009.06c 1.0
+
+% https://www.americanelements.com/tantalum-tungsten-alloy
+mat tant60 -16.7 tmp 700.0
+73181.06c -90.0 % 99.988% Ta-181. The rest is 180m, ignore it
+74000.06c -10.0
+
+% sodium coolant at 600K
+mat sodium -.968
+11023.06c 1.0
+
+%-------criticality calculation settings---------
+set pop 10000 200 20
+set gcu 0
+src mysrc n sp 0 0 0 se 1.0
+
+% --------- detectors ------------------
+% 1000 equal lethargy bins from tenth of millielectronvolt to 12 MeV
+ene myEne 3 1000 1e-10 12.0
+
+% measure spectrum in fuel
+det specdet
+dm fuel
+de myEne
+dt -3
+dr 0 fuel
+
+% power vs. radius in fuel, no gamma heating
+det powerVRad
+dn 2 0.0 5.1 20 0.0 360.0 1 0.0 180.0 1
+dr -6 fuel % fission rate
+
+% measure incurrent to fuel
+det fuelIncurrent
+ds 1 -1 % fuel boundary, inward-directed
+de myEne
+dt -3
+
+
+%-------Set the xs library locations-------------
+
+set acelib "sss_endfb7u.xsdata"
+set declib "sss_endfb7.dec"
+set nfylib "sss_endfb7.nfy"
+
+mesh 3 1000 1000
+plot 3 1000 1000
+
+% specify perturbations to make
+branch fuel0 stp fuel -16.00 700.0
+branch fuel1 stp fuel -16.00 750.0 % -15.9075 700.0
+
+% feedback coefficients
+coef 1
+0
+2  fuel0 fuel1
