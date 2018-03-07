@@ -1,0 +1,59 @@
+include "materials.serp"
+surf 1 sph 0 0 0 5.0
+surf 2 sph 0 0 0 5.5
+% ~1/4 inch sodium coolant blanket
+surf 4 sph 0 0 0 6.135
+surf 5 sph 0 0 0 6.635
+% half centimeter sodium coolant vessel (stainless steel)
+
+cell 1 0 fuel -1
+cell 2 0 tant60 1 -2
+cell 5 0 sodium 2 -4
+cell 6 0 stain 4 -5
+surf 202 pz 12.740867055545836
+surf 203 pz -12.740867055545836
+cell 999 0 outside 202
+cell 998 0 outside -203
+
+%% Stuff for initial drum universe
+surf 11 sph 0.0 -13.47 0.0 20.205
+surf 12 sph 0.0 -13.47 0.0 19.705
+surf 13 cyl 0.0 0.0 6.735
+
+cell 10 drum0 refl -13 -12
+cell 11 drum0 b4c -13 12 -11
+cell 12 drum0 air 11
+cell 13 drum0 air -11 13
+
+% Universes for each drum
+cell 20 1 fill drum0 -13
+cell 101 drum1 fill drum0 -13
+cell 102 drum2 fill drum0 -13
+cell 103 drum3 fill drum0 -13
+cell 104 drum4 fill drum0 -13
+cell 105 drum5 fill drum0 -13
+cell 106 drum6 fill drum0 -13
+
+% Transform each drum universe to go to most critical config
+%                       how many degrees about z?
+trans drum1 0 0 0 0 0 60
+trans drum2 0 0 0 0 0 0
+trans drum3 0 0 0 0 0 300
+trans drum4 0 0 0 0 0 240
+trans drum5 0 0 0 0 0 180
+trans drum6 0 0 0 0 0 120
+
+% This puts all the drums into a ring.
+lat ringUni 4 0 0 1
+6 13.5 30.0 drum1 drum2 drum3 drum4 drum5 drum6 
+
+% These bound the circular cluster lattice
+surf 200 cyl 0 0 6.635
+surf 201 cyl 0 0 20.84673411109167
+
+cell latce 0 fill ringUni 200 -201
+cell 997 0 outside 202
+plot 1 1000 1000
+plot 2 1000 1000
+plot 3 1000 1000
+set pop 1000 100 10 1

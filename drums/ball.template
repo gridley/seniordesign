@@ -1,0 +1,12 @@
+surf 1 sph 0 0 0 {{ fuelRad }}
+surf 2 sph 0 0 0 {{ (fuelRad+tantThick)|float }}
+% ~1/4 inch sodium coolant blanket
+surf 4 sph 0 0 0 {{ (fuelRad+tantThick+coolThick)|float }}
+surf 5 sph 0 0 0 {{ (fuelRad+tantThick+coolThick+coolVessThick)|float }}
+% half centimeter sodium coolant vessel (stainless steel)
+
+cell 1 0 fuel -1
+cell 2 0 tant60 1 -2
+cell 5 0 sodium 2 -4
+cell 6 0 stain 4 -5
+

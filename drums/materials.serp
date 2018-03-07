@@ -1,0 +1,42 @@
+% Martian air. Could use void, but why not this?
+mat air -0.001 rgb 0 0 0
+6000.06c 1.0
+8016.06c 2.0
+
+mat fuel -16.0 burn 1 tmp 700.0 rgb 162 44 255
+94238.06c  8.18535242e-05
+94239.06c  6.37136035e-01
+94240.06c  3.92321333e-02
+94241.06c  2.35768284e-03
+94242.06c  1.47579209e-04
+31000.06c  2.35212255e-02
+26000.06c  2.97523490e-01
+
+% stainless steel
+mat stain  -8.027 rgb 100 100 100
+Ni-nat.09c -0.100
+C-nat.09c  -0.0003
+Fe-nat.09c -0.67895
+Cr-nat.09c -0.19
+Ti-46.09c  -0.002
+Si-nat.09c -0.01
+S-nat.09c  -0.0003
+
+% Be reflector
+mat refl -1.85 tmp 700.0 rgb 172 213 159
+4009.06c 1.0
+
+% https://www.americanelements.com/tantalum-tungsten-alloy
+mat tant60 -16.7 tmp 700.0 rgb 112 115 117
+73181.06c -90.0 % 99.988% Ta-181. The rest is 180m, ignore it
+74000.06c -10.0
+
+% sodium coolant at 600K
+mat sodium -.968 rgb 212 221 225
+11023.06c 1.0
+
+% This is wrong and should be fixed.
+mat b4c -3.0 rgb 159 220 250
+5010.06c 2.0
+5011.06c 2.0
+6000.06c 1.0
