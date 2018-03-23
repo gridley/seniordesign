@@ -1,0 +1,13 @@
+%% Wedges that are between drums and core
+surf w1 cyl {{ r2drum*sin30 }} {{ r2drum*cos30 }} {{ rdrum + clear }}
+surf w2 cyl -{{ r2drum*sin30 }} {{ r2drum*cos30 }} {{ rdrum  + clear }}
+surf w3 cyl 0 0 {{ rvess + clear }}
+surf w4 sph 0.0 0.0 0.0 19.705
+surf w5 sph 0.0 0.0 0.0 20.205
+surf w6 cyl 0 8 4.0 % approx, eyeball through plots later to cut edges
+
+cell 113 wedge0 refl w1 w2 w3 -w6
+cell 114 wedge0 air -w1 -w6
+cell 115 wedge0 air -w2 -w6
+cell 116 wedge0 air -w3 -w6
+cell 117 wedge0 air w6
