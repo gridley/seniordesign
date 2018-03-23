@@ -1,9 +1,14 @@
 % Martian air. Could use void, but why not this?
-mat air -0.001 rgb 0 0 0
-6000.06c 1.0
-8016.06c 2.0
+% mat air -0.001 rgb 250 250 250
+% 6000.06c 1.0
+% 8016.06c 2.0
 
-mat fuel -16.0 burn 1 tmp 700.0 rgb 162 44 255
+% crash into cold water, shutdown, all fuel
+mat air -1.0 rgb 0 30 230
+1001.03c 2.0
+8016.03c 1.0
+
+mat fuel -16.0 burn 1 tmp 700.0 rgb 162 44 255 vol 5.2360E+02
 94238.06c  8.18535242e-05
 94239.06c  6.37136035e-01
 94240.06c  3.92321333e-02

@@ -1,0 +1,14 @@
+% --- Material volumes:
+
+% Produced Fri Mar 23 15:08:45 2018 by MC volume calculation routine by
+% sampling 10000000 random points in the geometry.
+
+set mvol
+
+air             0 2.16164E+04 % (0.000)
+fuel            0 5.38917E+02 % (0.004)
+stain           0 2.57777E+02 % (0.005)
+refl            0 2.99590E+04 % (0.000)
+tant60          0 1.57282E+02 % (0.006)
+sodium          0 2.73449E+02 % (0.006)
+b4c             0 2.36965E+03 % (0.002)

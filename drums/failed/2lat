@@ -1,6 +1,6 @@
 include "materials.serp"
-surf 1 sph 0 0 0 5.05
-surf 2 sph 0 0 0 5.55
+surf 1 sph 0 0 0 5.0
+surf 2 sph 0 0 0 5.5
 % ~1/4 inch sodium coolant blanket
 surf 4 sph 0 0 0 6.135
 surf 5 sph 0 0 0 6.635
@@ -63,68 +63,45 @@ surf w3 cyl 0 0 6.645
 surf w4 sph 0.0 0.0 0.0 19.705
 surf w5 sph 0.0 0.0 0.0 20.205
 surf w6 cyl 0 8 4.0 % approx, eyeball through plots later to cut edges
-surf w7 py 12.8
-surf w8 cyl 7.0 11.8 6.97
-surf w9 cyl -7.0 11.8 6.97
-cell 113 wedge refl w1 w2 w3 -w6 -w4 -w7
-cell 114 wedge air -w1 -w6 -w5 -w7
-cell 115 wedge air -w2 -w6 -w5 -w7
-cell 116 wedge air -w3 -w6 -w5 -w7
-cell 117 wedge air w6 -w5 -w7
-cell 118 wedge b4c w1 w2 w3 -w6 w4 -w5 -w7 % shield coating
-cell 118.1 wedge air w5
-cell 118.2 wedge refl w8 w9 -w4 w7
-cell 118.4 wedge air -w8:-w9 -w4 w7
-cell 118.5 wedge air -w8:-w9 w4 -w5 w7
-cell 118.3 wedge b4c w8 w9 w4 -w5 w7
+cell 113 wedge0 refl w1 w2 w3 -w6 -w4
+cell 114 wedge0 air -w1 -w6 -w5
+cell 115 wedge0 air -w2 -w6 -w5
+cell 116 wedge0 air -w3 -w6 -w5
+cell 117 wedge0 air w6 -w5
+cell 118 wedge0 b4c w1 w2 w3 -w6 w4 -w5 % shield coating
 
 % shift to origin
-trans wedge 0 -13.7 0 0 0 30 1
-surf aa px 0
-cell dan wedge1 fill wedge aa
-% reflect about x
-trans wedge1 0 0 0 -1 0 0 0 1 0 0 0 1
+trans wedge0 0 -6.635 0 0 0 0
 
-% reflect wedge about x axis
-cell 119.1 wedge3 fill wedge aa
-cell 119.2 wedge3 fill wedge1 -aa
+% make moaarrr wedges
+cell 119 wedge1 fill wedge0 -w0
+cell 120 wedge2 fill wedge0 -w0
+cell 121 wedge3 fill wedge0 -w0
+cell 122 wedge4 fill wedge0 -w0
+cell 123 wedge5 fill wedge0 -w0
+cell 124 wedge6 fill wedge0 -w0
 
-% Make universe for drum + one edge
-cell 121 f1 fill drum1 -13
-cell 122 f2 fill drum2 -13
-cell 123 f3 fill drum3 -13
-cell 124 f4 fill drum4 -13
-cell 125 f5 fill drum5 -13
-cell 126 f6 fill drum6 -13
-%  add wedges
-cell 127 f1 fill wedge3 13
-cell 128 f2 fill wedge3 13
-cell 129 f3 fill wedge3 13
-cell 130 f4 fill wedge3 13
-cell 131 f5 fill wedge3 13
-cell 132 f6 fill wedge3 13
+% wedge translations
+trans wedge1 0 0 0 0 0 0
+trans wedge2 0 0 0 0 0 30
+trans wedge3 0 0 0 0 0 300
+trans wedge4 0 0 0 0 0 240
+trans wedge5 0 0 0 0 0 180
+trans wedge6 0 0 0 0 0 120
 
-% DON'T TOUCH: rotates wedges
-trans f1 0 0 0 0 0 60  
-trans f2 0 0 0 0 0 0   
-trans f3 0 0 0 0 0 300 
-trans f4 0 0 0 0 0 240 
-trans f5 0 0 0 0 0 180 
-trans f6 0 0 0 0 0 120 
-
-% Feel free to rotate the drums by adjusting these!
 % Transform each drum universe to go to most critical config
 %                       how many degrees about z?
-trans drum1 0 0 0 0 0 180 % 0 
-trans drum2 0 0 0 0 0 180 % 0 
-trans drum3 0 0 0 0 0 180 % 0 
-trans drum4 0 0 0 0 0 180 % 0 
-trans drum5 0 0 0 0 0 180 % 0 
-trans drum6 0 0 0 0 0 180 % 0 
+trans drum1 0 0 0 0 0 60  % 240
+trans drum2 0 0 0 0 0 0   % 180
+trans drum3 0 0 0 0 0 300 % 120
+trans drum4 0 0 0 0 0 240 % 60 
+trans drum5 0 0 0 0 0 180 % 0  
+trans drum6 0 0 0 0 0 120 % 300
 
 % This puts all the drums into a ring.
-lat ringUni 4 0 0 1
-6 13.5 30.0 f1 f2 f3 f4 f5 f6
+lat ringUni 4 0 0 2
+6 6.635 0.0 wedge1 wedge2 wedge3 wedge4 wedge5 wedge6
+6 13.5 30.0 drum1 drum2 drum3 drum4 drum5 drum6 
 
 % These bound the circular cluster lattice
 surf 200 cyl 0 0 6.635
@@ -136,22 +113,15 @@ cell latce 0 fill ringUni 200 -201
 % and also below 
 cell 51 0 refl 5 -6 -202 203
 
-plot 1 2000 2000
-plot 2 2000 2000
-plot 3 2000 2000
+plot 1 1000 1000
+plot 2 1000 1000
+plot 3 1000 1000
 
 mesh 1 1000 1000
 mesh 2 1000 1000
 mesh 3 1000 1000
-mesh 12 4 3 1000 1000
 set pop 10000 100 10 1
 
 set acelib "sss_endfb7u.xsdata"
 set declib "sss_endfb7.dec"
 set nfylib "sss_endfb7.nfy"
-
-set power 20e3
-
-% dep
-% daystep
-% 7300

@@ -9,7 +9,7 @@ clear = .01 # cm, default ISO H11 clearance for ~ this geom
 
 ## Write wedges that go between core and drums; thus more efficiently reflects
 #  neutrons
-r2drum = 13.5 
+r2drum = 13.6
 rdrum = 6.735
 rvess = 6.635
 

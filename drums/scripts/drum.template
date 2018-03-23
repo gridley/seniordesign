@@ -1,0 +1,12 @@
+
+%% Stuff for initial drum universe
+surf 11 sph 0.0 {{ -fuelRad-tantThick-coolThick-coolVessThick-drumsize/2.0-reflclearance }} 0.0 {{ fuelRad+tantThick+coolThick+coolVessThick+drumsize+reflclearance }}
+surf 12 sph 0.0 {{ -fuelRad-tantThick-coolThick-coolVessThick-drumsize/2.0-reflclearance }} 0.0 {{ fuelRad+tantThick+coolThick+coolVessThick+drumsize+reflclearance-abswidth }}
+surf 13 cyl 0.0 0.0 {{ drumsize/2.0 }}
+
+cell 10 drum0 refl -13 -12
+cell 11 drum0 b4c -13 12 -11
+cell 12 drum0 air 11
+cell 13 drum0 air -11 13
+
+cell 20 1 fill drum0 -13
